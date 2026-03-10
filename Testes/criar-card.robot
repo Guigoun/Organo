@@ -1,5 +1,6 @@
 *** Settings ***
 Library          SeleniumLibrary
+Library          FakerLibrary    locale=pt_BR
 Test Teardown    Close Browser
 
 *** Variables ***
@@ -8,13 +9,15 @@ ${CAMPO_CARGO}     id:form-cargo
 ${CAMPO_IMAGEM}    id:form-imagem
 ${CAMPO_TIME}      class:lista-suspensa
 ${CAMPO_CARD}      id:form-botao 
-${PROGRAMACAO}     //option[contains(.,'Programação')]
-${FRONT-END}       //option[contains(.,'Front-End')]
-${DADOS}           //option[contains(.,'Data Science')]
-${DEVOPS}          //option[contains(.,'Devops')]
-${UX}              //option[contains(.,'UX e Design')]
-${MOBILE}          //option[contains(.,'Mobile')]
-${INOVACAO}        //option[contains(.,'Inovação')]
+@{SELECIONAR_TIMES}
+...    //option[contains(.,'Programação')]
+...    //option[contains(.,'Front-End')]
+...    //option[contains(.,'Data Science')]
+...    //option[contains(.,'Devops')]
+...    //option[contains(.,'UX e Design')]
+...    //option[contains(.,'Mobile')]
+...    //option[contains(.,'Inovação')]
+
 ${COLABORADOR}     class:colaborador
 ${VALOR_NOME}      Get Value    ${CAMPO_NOME}
 ${VALOR_CARGO}     Get Value    ${CAMPO_CARGO}
@@ -45,11 +48,17 @@ Dado que acessei o site da Organo
     Maximize Browser Window
 
 Quando preencho os campos do formulário com dados válidos
-    Input Text       ${CAMPO_NOME}      Guilherme               
-    Input Text       ${CAMPO_CARGO}     Desenvolvedor  
-    Input Text       ${CAMPO_IMAGEM}    https://i.pinimg.com/736x/cf/37/03/cf37033da3c04e6fc1510916600ffa08.jpg         
+    ${NOME}          FakerLibrary.File Name
+    Input Text       ${CAMPO_NOME}      ${NOME}
+
+    ${CARGO}         FakerLibrary.Job        
+    Input Text       ${CAMPO_CARGO}     ${CARGO}
+
+    ${IMAGEM}        FakerLibrary.Image Url
+    Input Text       ${CAMPO_IMAGEM}    ${IMAGEM}
+
     Click Element    ${CAMPO_TIME}
-    Click Element    ${PROGRAMACAO}            
+    Click Element    ${SELECIONAR_TIMES}[0]        
 
 E clico no botão "Criar Card"
     Sleep    4s
