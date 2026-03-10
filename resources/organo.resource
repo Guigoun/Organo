@@ -37,7 +37,7 @@ Quando preencho os campos do formulário com dados válidos
     Input Text       ${CAMPO_IMAGEM}    ${IMAGEM}
 
     Click Element    ${CAMPO_TIME}
-    Click Element    ${SELECIONAR_TIMES}[0]        
+    Click Element    ${SELECIONAR_TIMES}[0]
 
 E clico no botão "Criar Card"
     Scroll Element Into View         ${CAMPO_CARD}
@@ -62,7 +62,7 @@ Então o card não deve ser criado apresentando mensagem de campos obrigatórios
     Element Should Be Visible    id:form-times-erro
     
 #Cenário 3
-Quando crio 3 cards com dados válidos para o mesmo time
+Quando crio 3 cards para o mesmo time com dados válidos 
     FOR    ${i}    IN RANGE    0    3
         Quando preencho os campos do formulário com dados válidos
         E clico no botão "Criar Card"
@@ -71,7 +71,19 @@ Quando crio 3 cards com dados válidos para o mesmo time
     
 Então o sistema deve exibir os 3 cards criados
     ${CARDS_CRIADOS}    Get Element Count    ${COLABORADOR}
-    Should Be Equal As Integers    ${CARDS_CRIADOS}    3
+    Should Be Equal As Integers              ${CARDS_CRIADOS}    3
     
+#Cenário 4
+Quando crio 1 para cada time com dados válidos
+    FOR    ${i}    ${time}    IN ENUMERATE    @{SELECIONAR_TIMES}  
+        Quando preencho os campos do formulário com dados válidos
+        Click Element    ${time}
+        E clico no botão "Criar Card"
+    END
+
+Então o sistema deve exibir 1 card criado para cada time
+    Sleep    25s
+    ${CARDS_CRIADOS}    Get Element Count    ${COLABORADOR}
+    Should Be Equal As Integers              ${CARDS_CRIADOS}    7
     
 

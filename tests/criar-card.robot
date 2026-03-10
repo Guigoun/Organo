@@ -18,10 +18,15 @@ Cenário 2: Tenta criar card com campos obrigatórios em branco
 
 Cenário 3: Cria 3 cards no mesmo time
     Dado que acessei o site da organo
-    Quando crio 3 cards com dados válidos para o mesmo time
+    Quando crio 3 cards para o mesmo time com dados válidos
     Então o sistema deve exibir os 3 cards criados
 
+Cenário 4:
+    Dado que acessei o site da organo
+    Quando crio 1 para cada time com dados válidos
+    Então o sistema deve exibir 1 card criado para cada time
 
     
+
 
 
