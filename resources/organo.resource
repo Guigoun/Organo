@@ -1,7 +1,6 @@
 *** Settings ***
 Library          SeleniumLibrary
 Library          FakerLibrary    locale=pt_BR
-Test Teardown    Close Browser
 
 *** Variables ***
 ${CAMPO_NOME}      id:form-nome
@@ -19,25 +18,6 @@ ${CAMPO_CARD}      id:form-botao
 ...    //option[contains(.,'Inovação')]
 
 ${COLABORADOR}     class:colaborador
-${VALOR_NOME}      Get Value    ${CAMPO_NOME}
-${VALOR_CARGO}     Get Value    ${CAMPO_CARGO}
-${VALOR_IMAGEM}    Get Value    ${CAMPO_IMAGEM}
-${VALOR_TIME}      Get Value    ${CAMPO_TIME}
-
-*** Test Cases ***
-Cenário 1: Cria card com sucesso preenchendo os campos e verifica se está visível
-    Dado que acessei o site da Organo
-    Quando preencho os campos do formulário com dados válidos
-    E clico no botão "Criar Card"
-    Então o card deve ser criado com sucesso 
-    E deve estar visível no time esperado
-
-Cenário 2: Tenta criar card com campos obrigatórios em branco
-    Dado que acessei o site da Organo
-    Quando deixo todos os campos do formulário em brancos
-    E clico no botão "Criar Card"
-    Então o card não deve ser criado apresentando mensagem de campos obrigatórios
-
 
 *** Keywords ***
 #Cenário 1
